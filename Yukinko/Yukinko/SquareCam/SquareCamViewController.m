@@ -744,15 +744,16 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+  [super viewDidLoad];
+
 	// Do any additional setup after loading the view, typically from a nib.
 	[self setupAVCapture];
 	square = [[UIImage imageNamed: @"squarePNG"] retain];
-	NSDictionary *detectorOptions = [[NSDictionary alloc] initWithObjectsAndKeys: CIDetectorAccuracyLow, CIDetectorAccuracy, nil];
+
+  NSDictionary *detectorOptions = @{ CIDetectorAccuracy: CIDetectorAccuracyLow };
 	faceDetector = [[CIDetector detectorOfType: CIDetectorTypeFace
                                      context: nil
                                      options: detectorOptions] retain];
-	[detectorOptions release];
 }
 
 - (void)viewDidUnload {
