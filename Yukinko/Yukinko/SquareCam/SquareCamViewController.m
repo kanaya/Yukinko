@@ -384,6 +384,7 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 // main action method to take a still image -- if face detection has been turned on and a face has been detected
 // the square overlay will be composited on top of the captured image and saved to the camera roll
 - (IBAction)takePicture: (id)sender {
+#if 0
 	// Find out the current orientation and tell the still image output.
 	AVCaptureConnection *stillImageConnection = [stillImageOutput connectionWithMediaType: AVMediaTypeVideo];
 	UIDeviceOrientation curDeviceOrientation = [[UIDevice currentDevice] orientation];
@@ -472,6 +473,7 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
                                                     }
                                                   }
                                                 }];
+#endif
 }
 
 // turn on/off face detection
