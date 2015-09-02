@@ -686,17 +686,14 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 			exifOrientation = PHOTOS_EXIF_0ROW_RIGHT_0COL_TOP;
 			break;
 	}
-
-//	imageOptions = [NSDictionary dictionaryWithObject: [NSNumber numberWithInt: exifOrientation]
-//                                             forKey: CIDetectorImageOrientation];
   imageOptions = @{ CIDetectorImageOrientation: @(exifOrientation) };
 	NSArray *features = [faceDetector featuresInImage: ciImage
                                             options: imageOptions];
 	[ciImage release];
 	
-    // get the clean aperture
-    // the clean aperture is a rectangle that defines the portion of the encoded pixel dimensions
-    // that represents image data valid for display.
+  // get the clean aperture
+  // the clean aperture is a rectangle that defines the portion of the encoded pixel dimensions
+  // that represents image data valid for display.
 	CMFormatDescriptionRef fdesc = CMSampleBufferGetFormatDescription(sampleBuffer);
 	CGRect clap = CMVideoFormatDescriptionGetCleanAperture(fdesc, false /*originIsTopLeft == false*/);
 	
