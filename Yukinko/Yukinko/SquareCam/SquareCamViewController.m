@@ -687,8 +687,9 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 			break;
 	}
 
-	imageOptions = [NSDictionary dictionaryWithObject: [NSNumber numberWithInt: exifOrientation]
-                                             forKey: CIDetectorImageOrientation];
+//	imageOptions = [NSDictionary dictionaryWithObject: [NSNumber numberWithInt: exifOrientation]
+//                                             forKey: CIDetectorImageOrientation];
+  imageOptions = @{ CIDetectorImageOrientation: @(exifOrientation) };
 	NSArray *features = [faceDetector featuresInImage: ciImage
                                             options: imageOptions];
 	[ciImage release];
