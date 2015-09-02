@@ -146,7 +146,6 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 	UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
 	return newImage;
-	
 }
 
 @end
@@ -156,7 +155,7 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 @interface SquareCamViewController (InternalMethods)
 - (void)setupAVCapture;
 - (void)teardownAVCapture;
-- (void)drawFaceBoxesForFeatures:(NSArray *)features forVideoBox:(CGRect)clap orientation:(UIDeviceOrientation)orientation;
+- (void)drawFaceBoxesForFeatures: (NSArray *)features forVideoBox: (CGRect)clap orientation: (UIDeviceOrientation)orientation;
 @end
 
 @implementation SquareCamViewController
@@ -314,7 +313,7 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 	UIImage *rotatedSquareImage = [square imageRotatedByDegrees: rotationDegrees];
 	
   // features found by the face detector
-	for ( CIFaceFeature *ff in features ) {
+	for (CIFaceFeature *ff in features) {
 		CGRect faceRect = [ff bounds];
 		CGContextDrawImage(bitmapContext, faceRect, [rotatedSquareImage CGImage]);
 	}
@@ -397,8 +396,8 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
   // set the appropriate pixel format / image type output setting depending on if we'll need an uncompressed image for
   // the possiblity of drawing the red square over top or if we're just writing a jpeg to the camera roll which is the trival case
   if (doingFaceDetection)
-  [stillImageOutput setOutputSettings: [NSDictionary dictionaryWithObject: [NSNumber numberWithInt: kCMPixelFormat_32BGRA]
-                                                                   forKey: (id)kCVPixelBufferPixelFormatTypeKey]];
+    [stillImageOutput setOutputSettings: [NSDictionary dictionaryWithObject: [NSNumber numberWithInt: kCMPixelFormat_32BGRA]
+                                                                     forKey: (id)kCVPixelBufferPixelFormatTypeKey]];
 	else
 		[stillImageOutput setOutputSettings: [NSDictionary dictionaryWithObject: AVVideoCodecJPEG
                                                                      forKey: AVVideoCodecKey]];
@@ -437,7 +436,10 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
                                                         OSStatus err = CreateCGImageFromCVPixelBuffer(CMSampleBufferGetImageBuffer(imageDataSampleBuffer), &srcImage);
                                                         check(!err);
 						
-                                                        CGImageRef cgImageResult = [self newSquareOverlayedImageForFeatures: features inCGImage: srcImage withOrientation: curDeviceOrientation frontFacing:isUsingFrontFacingCamera];
+                                                        CGImageRef cgImageResult = [self newSquareOverlayedImageForFeatures: features
+                                                                                                                  inCGImage: srcImage
+                                                                                                            withOrientation: curDeviceOrientation
+                                                                                                                frontFacing: isUsingFrontFacingCamera];
                                                         if (srcImage)
                                                           CFRelease(srcImage);
 						
@@ -534,8 +536,7 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 
 // called asynchronously as the capture output is capturing sample buffers, this method asks the face detector (if on)
 // to detect features and for each draw the red square in a layer and set appropriate orientation
-- (void)drawFaceBoxesForFeatures: (NSArray *)features forVideoBox: (CGRect)clap orientation: (UIDeviceOrientation)orientation
-{
+- (void)drawFaceBoxesForFeatures: (NSArray *)features forVideoBox: (CGRect)clap orientation: (UIDeviceOrientation)orientation {
 	NSArray *sublayers = [NSArray arrayWithArray: [previewLayer sublayers]];
 	NSInteger sublayersCount = [sublayers count], currentSublayer = 0;
 	NSInteger featuresCount = [features count], currentFeature = 0;
@@ -545,12 +546,12 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
                    forKey: kCATransactionDisableActions];
 	
 	// hide all the face layers
-	for ( CALayer *layer in sublayers ) {
-		if ( [[layer name] isEqualToString: @"FaceLayer"] )
+	for (CALayer *layer in sublayers) {
+		if ([[layer name] isEqualToString: @"FaceLayer"])
 			[layer setHidden: YES];
 	}	
 	
-	if ( featuresCount == 0 || !detectFaces ) {
+	if (featuresCount == 0 || !detectFaces) {
 		[CATransaction commit];
 		return; // early bail.
 	}
