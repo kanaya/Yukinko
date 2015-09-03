@@ -155,7 +155,7 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 @interface SquareCamViewController (InternalMethods)
 - (void)setupAVCapture;
 - (void)teardownAVCapture;
-- (void)drawFaceBoxesForFeatures: (NSArray *)features forVideoBox: (CGRect)clap orientation: (UIDeviceOrientation)orientation;
+- (void)drawFaceBoxesForFeatures: (NSArray *)features forVideoBox: (CGRect)clap orientation: (UIDeviceOrientation)orientation captureConnection: (AVCaptureConnection *)connection;
 @end
 
 @implementation SquareCamViewController
@@ -483,7 +483,8 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 			// clear out any squares currently displaying.
 			[self drawFaceBoxesForFeatures: [NSArray array]
                          forVideoBox: CGRectZero
-                         orientation: UIDeviceOrientationPortrait];
+                         orientation: UIDeviceOrientationPortrait
+                   captureConnection: nil];
 		});
 	}
 }
@@ -536,10 +537,10 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 
 // called asynchronously as the capture output is capturing sample buffers, this method asks the face detector (if on)
 // to detect features and for each draw the red square in a layer and set appropriate orientation
-- (void)drawFaceBoxesForFeatures: (NSArray *)features forVideoBox: (CGRect)clap orientation: (UIDeviceOrientation)orientation {
+- (void)drawFaceBoxesForFeatures: (NSArray *)features forVideoBox: (CGRect)clap orientation: (UIDeviceOrientation)orientation captureConnection: (AVCaptureConnection *)connection {
 	NSArray *sublayers = [NSArray arrayWithArray: [previewLayer sublayers]];
 	NSInteger sublayersCount = [sublayers count], currentSublayer = 0;
-  NSInteger featuresCount = [features count]; // currentFeature = 0;
+  NSInteger featuresCount = [features count];
 	
 	[CATransaction begin];
 	[CATransaction setValue: (id)kCFBooleanTrue
@@ -558,7 +559,8 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 		
 	CGSize parentFrameSize = [previewView frame].size;
 	NSString *gravity = [previewLayer videoGravity];
-	BOOL isMirrored = [previewLayer isMirrored];
+	// BOOL isMirrored = [previewLayer isMirrored];
+  BOOL isMirrored = connection.videoMirrored;
 	CGRect previewBox = [SquareCamViewController videoPreviewBoxForGravity: gravity
                                                                frameSize: parentFrameSize
                                                             apertureSize: clap.size];
@@ -630,7 +632,6 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 			default:
 				break; // leave the layer in its last known orientation
 		}
-		// currentFeature++;
 	}
 	
 	[CATransaction commit];
@@ -702,7 +703,8 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 	dispatch_async(dispatch_get_main_queue(), ^(void) {
 		[self drawFaceBoxesForFeatures: features
                        forVideoBox: clap
-                       orientation: curDeviceOrientation];
+                       orientation: curDeviceOrientation
+                 captureConnection: connection];
 	});
 }
 
