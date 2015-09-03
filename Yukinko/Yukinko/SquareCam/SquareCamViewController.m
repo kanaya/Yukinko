@@ -588,6 +588,8 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 			faceRect = CGRectOffset(faceRect, previewBox.origin.x + previewBox.size.width - faceRect.size.width - (faceRect.origin.x * 2), previewBox.origin.y);
 		else
 			faceRect = CGRectOffset(faceRect, previewBox.origin.x, previewBox.origin.y);
+
+    // COPY FACIAL IMAGE TO LOCAL BUFFER
 		
 		CALayer *featureLayer = nil;
 		
