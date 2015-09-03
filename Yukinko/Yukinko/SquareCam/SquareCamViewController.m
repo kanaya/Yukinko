@@ -539,7 +539,7 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 - (void)drawFaceBoxesForFeatures: (NSArray *)features forVideoBox: (CGRect)clap orientation: (UIDeviceOrientation)orientation {
 	NSArray *sublayers = [NSArray arrayWithArray: [previewLayer sublayers]];
 	NSInteger sublayersCount = [sublayers count], currentSublayer = 0;
-	NSInteger featuresCount = [features count], currentFeature = 0;
+  NSInteger featuresCount = [features count]; // currentFeature = 0;
 	
 	[CATransaction begin];
 	[CATransaction setValue: (id)kCFBooleanTrue
@@ -595,22 +595,22 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 		
 		// re-use an existing layer if possible
 		while (!featureLayer && (currentSublayer < sublayersCount)) {
-			CALayer *currentLayer = [sublayers objectAtIndex:currentSublayer++];
-			if ([[currentLayer name] isEqualToString:@"FaceLayer"]) {
+			CALayer *currentLayer = [sublayers objectAtIndex: currentSublayer++];
+			if ([[currentLayer name] isEqualToString: @"FaceLayer"]) {
 				featureLayer = currentLayer;
-				[currentLayer setHidden:NO];
+				[currentLayer setHidden: NO];
 			}
 		}
 		
 		// create a new one if necessary
 		if (!featureLayer) {
 			featureLayer = [CALayer new];
-			[featureLayer setContents:(id)[square CGImage]];
-			[featureLayer setName:@"FaceLayer"];
-			[previewLayer addSublayer:featureLayer];
+			[featureLayer setContents: (id)[square CGImage]];
+			[featureLayer setName: @"FaceLayer"];
+			[previewLayer addSublayer: featureLayer];
 			[featureLayer release];
 		}
-		[featureLayer setFrame:faceRect];
+		[featureLayer setFrame: faceRect];
 		
 		switch (orientation) {
 			case UIDeviceOrientationPortrait:
@@ -630,7 +630,7 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 			default:
 				break; // leave the layer in its last known orientation
 		}
-		currentFeature++;
+		// currentFeature++;
 	}
 	
 	[CATransaction commit];
