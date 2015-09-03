@@ -559,7 +559,6 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 		
 	CGSize parentFrameSize = [previewView frame].size;
 	NSString *gravity = [previewLayer videoGravity];
-	// BOOL isMirrored = [previewLayer isMirrored];
   BOOL isMirrored = connection.videoMirrored;
 	CGRect previewBox = [SquareCamViewController videoPreviewBoxForGravity: gravity
                                                                frameSize: parentFrameSize
@@ -591,8 +590,10 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 		else
 			faceRect = CGRectOffset(faceRect, previewBox.origin.x, previewBox.origin.y);
 
-    // COPY FACIAL IMAGE TO LOCAL BUFFER
-		
+    // ISNERT CODE HERE
+    NSLog(@"faceRect == (%f, %f), (%f, %f)", faceRect.origin.x, faceRect.origin.y, faceRect.size.width, faceRect.size.height);
+    // UNTIL THIS LINE
+
 		CALayer *featureLayer = nil;
 		
 		// re-use an existing layer if possible
