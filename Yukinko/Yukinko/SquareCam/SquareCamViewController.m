@@ -46,6 +46,7 @@
  */
 
 #import "SquareCamViewController.h"
+#import <QuartzCore/QuartzCore.h>
 #import <CoreImage/CoreImage.h>
 #import <ImageIO/ImageIO.h>
 #import <AssertMacros.h>
@@ -564,9 +565,9 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
                                             options: imageOptions];
 
   // Let's gate CGImage from CMSampleBuffer
+  CGImageRef theCgImage = NULL;
   if (features.count > 0) {
     CIContext *ciContext = [CIContext contextWithOptions: nil]; // can go out of the loop?
-    CGImageRef theCgImage = NULL;
     for (CIFaceFeature *ff in features) {
       CGRect faceRect = ff.bounds;
       NSLog(@"faceRect == (%f, %f), (%f, %f)", faceRect.origin.x, faceRect.origin.y, faceRect.size.width, faceRect.size.height);
@@ -574,12 +575,14 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
                                            fromRect: faceRect];
       theCgImage = CGImageCreateCopy(cgImage);
     }
-    UIImage *uiImage = [UIImage imageWithCGImage: theCgImage];
-    // facialView.image = uiImage;
-    // facialViewLayer.contents = (id)theCgImage;
-    [ciImage release];
   }
-	
+  if (theCgImage != NULL) {
+    NSLog(@"Setting image.");
+    // facialViewLayer.contents = (id)theCgImage;
+    facialViewLayer.contents = (id)square.CGImage;  // ng
+  }
+  [ciImage release];
+
   // get the clean aperture
   // the clean aperture is a rectangle that defines the portion of the encoded pixel dimensions
   // that represents image data valid for display.
@@ -646,8 +649,15 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
   facialViewLayer = [CALayer layer];
   facialViewLayer.bounds = facialView.bounds;
   facialViewLayer.frame = facialView.bounds; // ???
-  facialViewLayer.contents = (id)square.CGImage;  // ok
-  // NSLog(@"rect == (%f, %f) -- (%f, %f)", facialViewLayer.bounds.origin.x, facialViewLayer.bounds.origin.y, facialViewLayer.bounds.size.width, facialViewLayer.bounds.size.height);
+//  facialViewLayer.contents = (id)square.CGImage;  // ok
+//  NSLog(@"rect == (%f, %f) -- (%f, %f)", facialViewLayer.bounds.origin.x, facialViewLayer.bounds.origin.y, facialViewLayer.bounds.size.width, facialViewLayer.bounds.size.height);
+//  CATransition* transition = [CATransition animation];
+//  transition.startProgress = 0;
+//  transition.endProgress = 1.0;
+//  transition.type = kCATransitionFade;
+//  transition.duration = 0.0;
+//  [facialViewLayer addAnimation: transition forKey: @"transition"];
+
   [facialView.layer addSublayer: facialViewLayer];
 }
 
