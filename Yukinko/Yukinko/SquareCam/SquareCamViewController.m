@@ -60,48 +60,48 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
   return degrees * M_PI / 180;
 }
 
-static void ReleaseCVPixelBuffer(void *pixel, const void *data, size_t size) {
-	CVPixelBufferRef pixelBuffer = (CVPixelBufferRef)pixel;
-	CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
-	CVPixelBufferRelease(pixelBuffer);
-}
+//static void ReleaseCVPixelBuffer(void *pixel, const void *data, size_t size) {
+//	CVPixelBufferRef pixelBuffer = (CVPixelBufferRef)pixel;
+//	CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
+//	CVPixelBufferRelease(pixelBuffer);
+//}
 
 // create a CGImage with provided pixel buffer, pixel buffer must be uncompressed kCVPixelFormatType_32ARGB or kCVPixelFormatType_32BGRA
-static OSStatus CreateCGImageFromCVPixelBuffer(CVPixelBufferRef pixelBuffer, CGImageRef *imageOut) {
-	OSStatus err = noErr;
-
-	OSType sourcePixelFormat = CVPixelBufferGetPixelFormatType(pixelBuffer);
-  CGBitmapInfo bitmapInfo;
-	if (sourcePixelFormat == kCVPixelFormatType_32ARGB)
-		bitmapInfo = kCGBitmapByteOrder32Big | kCGImageAlphaNoneSkipFirst;
-	else if (sourcePixelFormat == kCVPixelFormatType_32BGRA)
-		bitmapInfo = kCGBitmapByteOrder32Little | kCGImageAlphaNoneSkipFirst;
-	else
-		return -95014; // only uncompressed pixel formats
-	
-	size_t sourceRowBytes = CVPixelBufferGetBytesPerRow(pixelBuffer);
-	size_t width = CVPixelBufferGetWidth(pixelBuffer);
-	size_t height = CVPixelBufferGetHeight(pixelBuffer);
-	
-	CVPixelBufferLockBaseAddress(pixelBuffer, 0);
-	void *sourceBaseAddr = CVPixelBufferGetBaseAddress(pixelBuffer);
-	
-	CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
-    
-	CVPixelBufferRetain(pixelBuffer);
-	CGDataProviderRef provider = CGDataProviderCreateWithData((void *)pixelBuffer, sourceBaseAddr, sourceRowBytes * height, ReleaseCVPixelBuffer);
-	CGImageRef image = CGImageCreate(width, height, 8, 32, sourceRowBytes, colorspace, bitmapInfo, provider, NULL, true, kCGRenderingIntentDefault);
-	
-  bail:
-	if (err && image) {
-		CGImageRelease(image);
-		image = NULL;
-	}
-	if (provider) CGDataProviderRelease(provider);
-	if (colorspace) CGColorSpaceRelease(colorspace);
-	*imageOut = image;
-	return err;
-}
+//static OSStatus CreateCGImageFromCVPixelBuffer(CVPixelBufferRef pixelBuffer, CGImageRef *imageOut) {
+//	OSStatus err = noErr;
+//
+//	OSType sourcePixelFormat = CVPixelBufferGetPixelFormatType(pixelBuffer);
+//  CGBitmapInfo bitmapInfo;
+//	if (sourcePixelFormat == kCVPixelFormatType_32ARGB)
+//		bitmapInfo = kCGBitmapByteOrder32Big | kCGImageAlphaNoneSkipFirst;
+//	else if (sourcePixelFormat == kCVPixelFormatType_32BGRA)
+//		bitmapInfo = kCGBitmapByteOrder32Little | kCGImageAlphaNoneSkipFirst;
+//	else
+//		return -95014; // only uncompressed pixel formats
+//	
+//	size_t sourceRowBytes = CVPixelBufferGetBytesPerRow(pixelBuffer);
+//	size_t width = CVPixelBufferGetWidth(pixelBuffer);
+//	size_t height = CVPixelBufferGetHeight(pixelBuffer);
+//	
+//	CVPixelBufferLockBaseAddress(pixelBuffer, 0);
+//	void *sourceBaseAddr = CVPixelBufferGetBaseAddress(pixelBuffer);
+//	
+//	CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+//    
+//	CVPixelBufferRetain(pixelBuffer);
+//	CGDataProviderRef provider = CGDataProviderCreateWithData((void *)pixelBuffer, sourceBaseAddr, sourceRowBytes * height, ReleaseCVPixelBuffer);
+//	CGImageRef image = CGImageCreate(width, height, 8, 32, sourceRowBytes, colorspace, bitmapInfo, provider, NULL, true, kCGRenderingIntentDefault);
+//	
+//  bail:
+//	if (err && image) {
+//		CGImageRelease(image);
+//		image = NULL;
+//	}
+//	if (provider) CGDataProviderRelease(provider);
+//	if (colorspace) CGColorSpaceRelease(colorspace);
+//	*imageOut = image;
+//	return err;
+//}
 
 // utility used by newSquareOverlayedImageForFeatures for 
 static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
