@@ -568,7 +568,7 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 		// find the correct position for the square layer within the previewLayer
 		// the feature box originates in the bottom left of the video frame.
 		// (Bottom right if mirroring is turned on)
-		CGRect faceRect = [ff bounds];
+		CGRect faceRect = ff.bounds;
 
 		// flip preview width and height
 		CGFloat temp = faceRect.size.width;
