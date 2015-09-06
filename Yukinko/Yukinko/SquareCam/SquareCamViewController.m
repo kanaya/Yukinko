@@ -564,17 +564,20 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
                                             options: imageOptions];
 
   // Let's gate CGImage from CMSampleBuffer
-  for (CIFaceFeature *ff in features) {
+  if (features.count > 0) {
     CIContext *ciContext = [CIContext contextWithOptions: nil]; // can go out of the loop?
-    CGRect faceRect = ff.bounds;
-    NSLog(@"faceRect == (%f, %f), (%f, %f)", faceRect.origin.x, faceRect.origin.y, faceRect.size.width, faceRect.size.height);
-    CGImageRef cgImage = [ciContext createCGImage: ciImage
-                                         fromRect: faceRect];
-    // do something with cgimageref
-    UIImage *uiImage = [UIImage imageWithCGImage: cgImage];
+    CGImageRef theCgImage = NULL;
+    for (CIFaceFeature *ff in features) {
+      CGRect faceRect = ff.bounds;
+      NSLog(@"faceRect == (%f, %f), (%f, %f)", faceRect.origin.x, faceRect.origin.y, faceRect.size.width, faceRect.size.height);
+      CGImageRef cgImage = [ciContext createCGImage: ciImage
+                                           fromRect: faceRect];
+      theCgImage = CGImageCreateCopy(cgImage);
+    }
+    UIImage *uiImage = [UIImage imageWithCGImage: theCgImage];
     facialView.image = uiImage;
+    [ciImage release];
   }
-  [ciImage release];
 	
   // get the clean aperture
   // the clean aperture is a rectangle that defines the portion of the encoded pixel dimensions
