@@ -58,16 +58,17 @@
                                     <outletCollection property="gestureRecognizers" destination="23" appends="YES" id="24"/>
                                 </connections>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="ANB-bf-OtR">
-                                <rect key="frame" x="96" y="176" width="128" height="128"/>
+                            <view contentMode="scaleToFill" id="mIQ-gd-nIX">
+                                <rect key="frame" x="96" y="26" width="128" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="camerasControl" destination="15" id="20"/>
-                        <outlet property="facialView" destination="ANB-bf-OtR" id="nBm-iR-RTQ"/>
+                        <outlet property="facialView" destination="mIQ-gd-nIX" id="hXS-Ng-18N"/>
                         <outlet property="previewView" destination="12" id="13"/>
                     </connections>
                 </viewController>

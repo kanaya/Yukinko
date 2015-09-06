@@ -575,7 +575,8 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
       theCgImage = CGImageCreateCopy(cgImage);
     }
     UIImage *uiImage = [UIImage imageWithCGImage: theCgImage];
-    facialView.image = uiImage;
+    // facialView.image = uiImage;
+    // facialViewLayer.contents = (id)theCgImage;
     [ciImage release];
   }
 	
@@ -641,6 +642,13 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 	faceDetector = [[CIDetector detectorOfType: CIDetectorTypeFace
                                      context: nil
                                      options: detectorOptions] retain];
+
+  facialViewLayer = [CALayer layer];
+  facialViewLayer.bounds = facialView.bounds;
+  facialViewLayer.frame = facialView.bounds; // ???
+  facialViewLayer.contents = (id)square.CGImage;  // ok
+  // NSLog(@"rect == (%f, %f) -- (%f, %f)", facialViewLayer.bounds.origin.x, facialViewLayer.bounds.origin.y, facialViewLayer.bounds.size.width, facialViewLayer.bounds.size.height);
+  [facialView.layer addSublayer: facialViewLayer];
 }
 
 - (void)viewDidUnload {
