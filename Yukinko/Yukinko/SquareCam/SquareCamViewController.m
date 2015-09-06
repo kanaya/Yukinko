@@ -591,7 +591,6 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 			faceRect = CGRectOffset(faceRect, previewBox.origin.x, previewBox.origin.y);
 
     // ISNERT CODE HERE
-    NSLog(@"faceRect == (%f, %f), (%f, %f)", faceRect.origin.x, faceRect.origin.y, faceRect.size.width, faceRect.size.height);
     // UNTIL THIS LINE
 
 		CALayer *featureLayer = nil;
@@ -644,6 +643,7 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 	CFDictionaryRef attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault, sampleBuffer, kCMAttachmentMode_ShouldPropagate);
 	CIImage *ciImage = [[CIImage alloc] initWithCVPixelBuffer: pixelBuffer
                                                     options: (NSDictionary *)attachments];
+
 	if (attachments)
 		CFRelease(attachments);
 	NSDictionary *imageOptions = nil;
@@ -693,20 +693,32 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
   imageOptions = @{ CIDetectorImageOrientation: @(exifOrientation) };
 	NSArray *features = [faceDetector featuresInImage: ciImage
                                             options: imageOptions];
-	[ciImage release];
+
+  // Let's gate CGImage from CMSampleBuffer
+  for (CIFaceFeature *ff in features) {
+    CIContext *ciContext = [CIContext contextWithOptions: nil]; // can go out of the loop?
+    CGRect faceRect = ff.bounds;
+    NSLog(@"faceRect == (%f, %f), (%f, %f)", faceRect.origin.x, faceRect.origin.y, faceRect.size.width, faceRect.size.height);
+    CGImageRef cgImage = [ciContext createCGImage: ciImage
+                                         fromRect: faceRect];
+    // do something with cgimageref
+    UIImage *uiImage = [UIImage imageWithCGImage: cgImage];
+    facialView.image = uiImage;
+  }
+  [ciImage release];
 	
   // get the clean aperture
   // the clean aperture is a rectangle that defines the portion of the encoded pixel dimensions
   // that represents image data valid for display.
-	CMFormatDescriptionRef fdesc = CMSampleBufferGetFormatDescription(sampleBuffer);
-	CGRect clap = CMVideoFormatDescriptionGetCleanAperture(fdesc, false /*originIsTopLeft == false*/);
-	
-	dispatch_async(dispatch_get_main_queue(), ^(void) {
-		[self drawFaceBoxesForFeatures: features
-                       forVideoBox: clap
-                       orientation: curDeviceOrientation
-                 captureConnection: connection];
-	});
+//	CMFormatDescriptionRef fdesc = CMSampleBufferGetFormatDescription(sampleBuffer);
+//	CGRect clap = CMVideoFormatDescriptionGetCleanAperture(fdesc, false /*originIsTopLeft == false*/);
+//	
+//	dispatch_async(dispatch_get_main_queue(), ^(void) {
+//		[self drawFaceBoxesForFeatures: features
+//                       forVideoBox: clap
+//                       orientation: curDeviceOrientation
+//                 captureConnection: connection];
+//	});
 }
 
 - (void)dealloc {
@@ -808,7 +820,7 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 		}
 	}
 	
-	if ( allTouchesAreOnThePreviewLayer ) {
+	if (allTouchesAreOnThePreviewLayer) {
 		effectiveScale = beginGestureScale * recognizer.scale;
 		if (effectiveScale < 1.0)
 			effectiveScale = 1.0;
