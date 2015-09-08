@@ -647,6 +647,7 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
                                      options: detectorOptions] retain];
 
   facialViewLayer = [CALayer layer];
+  facialViewLayer.backgroundColor = [UIColor redColor].CGColor;
   facialViewLayer.bounds = facialView.bounds;
   facialViewLayer.frame = facialView.bounds; // ???
 //  facialViewLayer.contents = (id)square.CGImage;  // ok
