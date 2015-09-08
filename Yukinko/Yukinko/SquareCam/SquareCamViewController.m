@@ -339,9 +339,11 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
   });
 }
 
-// main action method to take a still image -- if face detection has been turned on and a face has been detected
-// the square overlay will be composited on top of the captured image and saved to the camera roll
 - (IBAction)takePicture: (id)sender {
+  // Here we go.
+  if (currentFace) {
+    facialViewLayer.contents = (id)currentFace.CGImage;
+  }
 }
 
 // turn on/off face detection

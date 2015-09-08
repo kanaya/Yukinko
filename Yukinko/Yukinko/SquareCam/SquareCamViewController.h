@@ -68,9 +68,9 @@
 	CGFloat effectiveScale;
 }
 
-- (IBAction)takePicture:(id)sender;
-- (IBAction)switchCameras:(id)sender;
-- (IBAction)handlePinchGesture:(UIGestureRecognizer *)sender;
-- (IBAction)toggleFaceDetection:(id)sender;
+- (IBAction)takePicture: (id)sender;
+- (IBAction)switchCameras: (id)sender;
+- (IBAction)handlePinchGesture: (UIGestureRecognizer *)sender;
+- (IBAction)toggleFaceDetection: (id)sender;
 
 @end
