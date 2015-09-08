@@ -355,15 +355,15 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 - (IBAction)toggleFaceDetection: (id)sender {
 	detectFaces = [(UISwitch *)sender isOn];
 	[[videoDataOutput connectionWithMediaType: AVMediaTypeVideo] setEnabled: detectFaces];
-	if (!detectFaces) {
-		dispatch_async(dispatch_get_main_queue(), ^(void) {
-			// clear out any squares currently displaying.
-			[self drawFaceBoxesForFeatures: [NSArray array]
-                         forVideoBox: CGRectZero
-                         orientation: UIDeviceOrientationPortrait
-                   captureConnection: nil];
-		});
-	}
+//	if (!detectFaces) {
+//		dispatch_async(dispatch_get_main_queue(), ^(void) {
+//			// clear out any squares currently displaying.
+//			[self drawFaceBoxesForFeatures: [NSArray array]
+//                         forVideoBox: CGRectZero
+//                         orientation: UIDeviceOrientationPortrait
+//                   captureConnection: nil];
+//		});
+//	}
 }
 
 // find where the video box is positioned within the preview layer based on the video size and gravity
