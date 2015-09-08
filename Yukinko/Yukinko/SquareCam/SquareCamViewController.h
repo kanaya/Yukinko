@@ -51,9 +51,9 @@
 
 @interface SquareCamViewController: UIViewController <UIGestureRecognizerDelegate, AVCaptureVideoDataOutputSampleBufferDelegate> {
 	IBOutlet UIView *previewView;
-  IBOutlet UIView *facialView;
-  CALayer *facialViewLayer;
-  UIImage *currentFace;
+  IBOutlet UIView *facialView0, *facialView1, *facialView2, *facialView3;
+  NSArray *facialViewLayers;
+  NSArray *facialImages;
 	IBOutlet UISegmentedControl *camerasControl;
 	AVCaptureVideoPreviewLayer *previewLayer;
 	AVCaptureVideoDataOutput *videoDataOutput;

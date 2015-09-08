@@ -52,24 +52,43 @@
                             <view contentMode="scaleToFill" id="12">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="436"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" id="fqz-sF-cdI">
+                                        <rect key="frame" x="128" y="167" width="64" height="64"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" id="6uH-gg-9tp">
+                                        <rect key="frame" x="128" y="278" width="64" height="64"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" id="mIQ-gd-nIX">
+                                        <rect key="frame" x="128" y="52" width="64" height="64"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" id="HIi-EV-ifb">
+                                        <rect key="frame" x="128" y="364" width="64" height="64"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="23" appends="YES" id="24"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" id="mIQ-gd-nIX">
-                                <rect key="frame" x="96" y="26" width="128" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="camerasControl" destination="15" id="20"/>
-                        <outlet property="facialView" destination="mIQ-gd-nIX" id="hXS-Ng-18N"/>
-                        <outlet property="previewView" destination="12" id="13"/>
+                        <outlet property="facialView0" destination="mIQ-gd-nIX" id="VcJ-ob-6Ot"/>
+                        <outlet property="facialView1" destination="fqz-sF-cdI" id="cpe-To-RY5"/>
+                        <outlet property="facialView2" destination="6uH-gg-9tp" id="SX9-Em-Faa"/>
+                        <outlet property="facialView3" destination="HIi-EV-ifb" id="kKz-yb-dBv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>

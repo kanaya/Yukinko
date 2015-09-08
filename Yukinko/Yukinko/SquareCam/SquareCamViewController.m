@@ -341,8 +341,13 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 
 - (IBAction)takePicture: (id)sender {
   // Here we go.
-  if (currentFace) {
-    facialViewLayer.contents = (id)currentFace.CGImage;
+  if (facialImages) {
+    NSLog(@"Snap");
+    for (int i = 0; i < 1; ++i) { // should check count!!!
+      CALayer *layer = [facialViewLayers objectAtIndex: i];
+      UIImage *image = [facialImages objectAtIndex: i];
+      layer.contents = (id)image.CGImage;
+    }
   }
 }
 
@@ -568,16 +573,24 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 
   // Let's gate CGImage from CMSampleBuffer
   if (features.count > 0) {
+    NSMutableArray *_facialImages = [NSMutableArray arrayWithCapacity: features.count];
     CIContext *ciContext = [CIContext contextWithOptions: nil]; // can go out of the loop?
     for (CIFaceFeature *ff in features) {
       CGRect faceRect = ff.bounds;
       NSLog(@"faceRect == (%f, %f), (%f, %f)", faceRect.origin.x, faceRect.origin.y, faceRect.size.width, faceRect.size.height);
       CGImageRef cgImage = [ciContext createCGImage: ciImage
                                            fromRect: faceRect];
-      if (currentFace) {
-        [currentFace release];
-      }
-      currentFace = [[UIImage imageWithCGImage: cgImage] retain];;
+      UIImage *uiImage = [[UIImage imageWithCGImage: cgImage] retain];  // retain???
+      [_facialImages addObject: uiImage];
+    }
+    if (facialImages) {
+      facialImages = nil;
+    }
+    facialImages = [[NSArray arrayWithArray: _facialImages] retain];
+  }
+  else {
+    if (facialImages) {
+      facialImages = nil;
     }
   }
   [ciImage release];
@@ -645,13 +658,22 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
                                      context: nil
                                      options: detectorOptions] retain];
 
-  facialViewLayer = [CALayer layer];
-  facialViewLayer.backgroundColor = [UIColor yellowColor].CGColor;
-  facialViewLayer.bounds = facialView.bounds;
-  facialViewLayer.frame = facialView.bounds; // ???
-  [facialView.layer addSublayer: facialViewLayer];
+  NSMutableArray *_facialViewLayers = [NSMutableArray arrayWithCapacity: 4];
+  NSArray *facialViews = @[ facialView0, facialView1, facialView2, facialView3 ];
+  int i = 0;
+  for (UIView *facialView in facialViews) {
+    CALayer *facialLayer = [[CALayer layer] retain];
+    facialLayer.backgroundColor = [UIColor yellowColor].CGColor;
+    facialLayer.bounds = facialView.bounds;
+    facialLayer.frame = facialView.bounds; // ???
+    [facialView.layer addSublayer: facialLayer];
+    [_facialViewLayers insertObject: facialLayer
+                            atIndex: i];
+    ++i;
+  }
+  facialViewLayers = [[NSArray arrayWithArray: _facialViewLayers] retain];
 
-  currentFace = nil;
+  facialImages = nil;
 }
 
 - (void)viewDidUnload {
