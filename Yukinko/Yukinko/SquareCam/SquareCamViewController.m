@@ -565,7 +565,6 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
                                             options: imageOptions];
 
   // Let's gate CGImage from CMSampleBuffer
-  CGImageRef theCgImage = NULL;
   if (features.count > 0) {
     CIContext *ciContext = [CIContext contextWithOptions: nil]; // can go out of the loop?
     for (CIFaceFeature *ff in features) {
@@ -573,13 +572,11 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
       NSLog(@"faceRect == (%f, %f), (%f, %f)", faceRect.origin.x, faceRect.origin.y, faceRect.size.width, faceRect.size.height);
       CGImageRef cgImage = [ciContext createCGImage: ciImage
                                            fromRect: faceRect];
-      theCgImage = CGImageCreateCopy(cgImage);
+      if (currentFace) {
+        [currentFace release];
+      }
+      currentFace = [[UIImage imageWithCGImage: cgImage] retain];;
     }
-  }
-  if (theCgImage != NULL) {
-    NSLog(@"Setting image.");
-    // facialViewLayer.contents = (id)theCgImage;
-    facialViewLayer.contents = (id)square.CGImage;  // ng
   }
   [ciImage release];
 
@@ -647,19 +644,12 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
                                      options: detectorOptions] retain];
 
   facialViewLayer = [CALayer layer];
-  facialViewLayer.backgroundColor = [UIColor redColor].CGColor;
+  facialViewLayer.backgroundColor = [UIColor yellowColor].CGColor;
   facialViewLayer.bounds = facialView.bounds;
   facialViewLayer.frame = facialView.bounds; // ???
-//  facialViewLayer.contents = (id)square.CGImage;  // ok
-//  NSLog(@"rect == (%f, %f) -- (%f, %f)", facialViewLayer.bounds.origin.x, facialViewLayer.bounds.origin.y, facialViewLayer.bounds.size.width, facialViewLayer.bounds.size.height);
-//  CATransition* transition = [CATransition animation];
-//  transition.startProgress = 0;
-//  transition.endProgress = 1.0;
-//  transition.type = kCATransitionFade;
-//  transition.duration = 0.0;
-//  [facialViewLayer addAnimation: transition forKey: @"transition"];
-
   [facialView.layer addSublayer: facialViewLayer];
+
+  currentFace = nil;
 }
 
 - (void)viewDidUnload {

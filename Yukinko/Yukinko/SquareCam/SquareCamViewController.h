@@ -53,6 +53,7 @@
 	IBOutlet UIView *previewView;
   IBOutlet UIView *facialView;
   CALayer *facialViewLayer;
+  UIImage *currentFace;
 	IBOutlet UISegmentedControl *camerasControl;
 	AVCaptureVideoPreviewLayer *previewLayer;
 	AVCaptureVideoDataOutput *videoDataOutput;
