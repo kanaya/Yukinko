@@ -1,3 +1,5 @@
+// THIS WORK IS BASED ON APPLE'S SquareCam //
+
 /*
      File: SquareCamViewController.m
  Abstract: Dmonstrates iOS 5 features of the AVCaptureStillImageOutput class
@@ -282,49 +284,49 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 }
 
 // utility routine used after taking a still image to write the resulting image to the camera roll
-- (BOOL)writeCGImageToCameraRoll: (CGImageRef)cgImage withMetadata: (NSDictionary *)metadata {
-	CFMutableDataRef destinationData = CFDataCreateMutable(kCFAllocatorDefault, 0);
-	CGImageDestinationRef destination = CGImageDestinationCreateWithData(destinationData, CFSTR("public.jpeg"), 1, NULL);
-	BOOL success = (destination != NULL);
-	require(success, bail);
-
-	const float JPEGCompQuality = 0.85f; // JPEGHigherQuality
-	CFMutableDictionaryRef optionsDict = NULL;
-	CFNumberRef qualityNum = NULL;
-	
-	qualityNum = CFNumberCreate(0, kCFNumberFloatType, &JPEGCompQuality);    
-	if (qualityNum) {
-		optionsDict = CFDictionaryCreateMutable(0, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
-		if (optionsDict)
-			CFDictionarySetValue(optionsDict, kCGImageDestinationLossyCompressionQuality, qualityNum);
-		CFRelease(qualityNum);
-	}
-	
-	CGImageDestinationAddImage(destination, cgImage, optionsDict);
-	success = CGImageDestinationFinalize(destination);
-
-	if (optionsDict)
-		CFRelease(optionsDict);
-	
-	require(success, bail);
-	
-	CFRetain(destinationData);
-	ALAssetsLibrary *library = [ALAssetsLibrary new];
-	[library writeImageDataToSavedPhotosAlbum: (id)destinationData
-                                   metadata: metadata
-                            completionBlock: ^(NSURL *assetURL, NSError *error) {
-                              if (destinationData)
-                                CFRelease(destinationData);
-                            }];
-	[library release];
-
-  bail:
-	if (destinationData)
-		CFRelease(destinationData);
-	if (destination)
-		CFRelease(destination);
-	return success;
-}
+//- (BOOL)writeCGImageToCameraRoll: (CGImageRef)cgImage withMetadata: (NSDictionary *)metadata {
+//	CFMutableDataRef destinationData = CFDataCreateMutable(kCFAllocatorDefault, 0);
+//	CGImageDestinationRef destination = CGImageDestinationCreateWithData(destinationData, CFSTR("public.jpeg"), 1, NULL);
+//	BOOL success = (destination != NULL);
+//	require(success, bail);
+//
+//	const float JPEGCompQuality = 0.85f; // JPEGHigherQuality
+//	CFMutableDictionaryRef optionsDict = NULL;
+//	CFNumberRef qualityNum = NULL;
+//	
+//	qualityNum = CFNumberCreate(0, kCFNumberFloatType, &JPEGCompQuality);    
+//	if (qualityNum) {
+//		optionsDict = CFDictionaryCreateMutable(0, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+//		if (optionsDict)
+//			CFDictionarySetValue(optionsDict, kCGImageDestinationLossyCompressionQuality, qualityNum);
+//		CFRelease(qualityNum);
+//	}
+//	
+//	CGImageDestinationAddImage(destination, cgImage, optionsDict);
+//	success = CGImageDestinationFinalize(destination);
+//
+//	if (optionsDict)
+//		CFRelease(optionsDict);
+//	
+//	require(success, bail);
+//	
+//	CFRetain(destinationData);
+//	ALAssetsLibrary *library = [ALAssetsLibrary new];
+//	[library writeImageDataToSavedPhotosAlbum: (id)destinationData
+//                                   metadata: metadata
+//                            completionBlock: ^(NSURL *assetURL, NSError *error) {
+//                              if (destinationData)
+//                                CFRelease(destinationData);
+//                            }];
+//	[library release];
+//
+//  bail:
+//	if (destinationData)
+//		CFRelease(destinationData);
+//	if (destination)
+//		CFRelease(destination);
+//	return success;
+//}
 
 // utility routine to display error aleart if takePicture fails
 - (void)displayErrorOnMainQueue: (NSError *)error withMessage: (NSString *)message {
@@ -342,11 +344,21 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 - (IBAction)takePicture: (id)sender {
   // Here we go.
   if (facialImages) {
-    NSLog(@"Snap");
-    for (int i = 0; i < 1; ++i) { // should check count!!!
+    NSLog(@"Snap (%d)", facialImages.count);
+    for (int i = 0; i < facialImages.count; ++i) {
       CALayer *layer = [facialViewLayers objectAtIndex: i];
       UIImage *image = [facialImages objectAtIndex: i];
       layer.contents = (id)image.CGImage;
+    }
+    for (int i = facialImages.count; i < 4; ++i) {
+      CALayer *layer = [facialViewLayers objectAtIndex: i];
+      layer.contents = NULL;
+    }
+  }
+  else {
+    for (int i = 0; i < 4; ++i) {
+      CALayer *layer = [facialViewLayers objectAtIndex: i];
+      layer.contents = NULL;
     }
   }
 }
@@ -446,7 +458,6 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 		// the feature box originates in the bottom left of the video frame.
 		// (Bottom right if mirroring is turned on)
 		CGRect faceRect = ff.bounds;
-
 		// flip preview width and height
 		CGFloat temp = faceRect.size.width;
 		faceRect.size.width = faceRect.size.height;
@@ -571,9 +582,10 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 	NSArray *features = [faceDetector featuresInImage: ciImage
                                             options: imageOptions];
 
-  // Let's gate CGImage from CMSampleBuffer
+  // HERE WE GO.
   if (features.count > 0) {
     NSMutableArray *_facialImages = [NSMutableArray arrayWithCapacity: features.count];
+    // Let's gate CGImage from CMSampleBuffer
     CIContext *ciContext = [CIContext contextWithOptions: nil]; // can go out of the loop?
     for (CIFaceFeature *ff in features) {
       CGRect faceRect = ff.bounds;

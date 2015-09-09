@@ -1,3 +1,5 @@
+// THIS WORK IS BASED ON APPLE'S SquareCam //
+
 /*
      File: SquareCamViewController.h
  Abstract: Dmonstrates iOS 5 features of the AVCaptureStillImageOutput class
@@ -52,8 +54,8 @@
 @interface SquareCamViewController: UIViewController <UIGestureRecognizerDelegate, AVCaptureVideoDataOutputSampleBufferDelegate> {
 	IBOutlet UIView *previewView;
   IBOutlet UIView *facialView0, *facialView1, *facialView2, *facialView3;
-  NSArray *facialViewLayers;
-  NSArray *facialImages;
+  NSArray *facialViewLayers;  // 4 layers
+  NSArray *facialImages;  // upto 4 images
 	IBOutlet UISegmentedControl *camerasControl;
 	AVCaptureVideoPreviewLayer *previewLayer;
 	AVCaptureVideoDataOutput *videoDataOutput;
