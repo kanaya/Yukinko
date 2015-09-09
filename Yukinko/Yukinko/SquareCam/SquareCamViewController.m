@@ -57,7 +57,7 @@
 #pragma mark-
 
 // used for KVO observation of the @"capturingStillImage" property to perform flash bulb animation
-static const NSString *AVCaptureStillImageIsCapturingStillImageContext = @"AVCaptureStillImageIsCapturingStillImageContext";
+//static const NSString *AVCaptureStillImageIsCapturingStillImageContext = @"AVCaptureStillImageIsCapturingStillImageContext";
 
 static CGFloat DegreesToRadians(CGFloat degrees) {
   return degrees * M_PI / 180;
