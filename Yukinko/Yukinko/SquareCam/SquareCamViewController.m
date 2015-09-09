@@ -64,14 +64,14 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 }
 
 // utility used by newSquareOverlayedImageForFeatures for 
-static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
-  int bitmapBytesPerRow = (size.width * 4);
-  CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-  CGContextRef context = CGBitmapContextCreate(NULL, size.width, size.height, 8, bitmapBytesPerRow, colorSpace, kCGImageAlphaPremultipliedLast);
-	CGContextSetAllowsAntialiasing(context, NO);
-  CGColorSpaceRelease(colorSpace);
-  return context;
-}
+//static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
+//  int bitmapBytesPerRow = (size.width * 4);
+//  CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+//  CGContextRef context = CGBitmapContextCreate(NULL, size.width, size.height, 8, bitmapBytesPerRow, colorSpace, kCGImageAlphaPremultipliedLast);
+//	CGContextSetAllowsAntialiasing(context, NO);
+//  CGColorSpaceRelease(colorSpace);
+//  return context;
+//}
 
 #pragma mark-
 
