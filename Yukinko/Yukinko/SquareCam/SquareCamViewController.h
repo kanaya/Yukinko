@@ -51,7 +51,7 @@
 #import <AVFoundation/AVFoundation.h>
 @class CIDetector;
 
-@interface SquareCamViewController: UIViewController <UIGestureRecognizerDelegate, AVCaptureVideoDataOutputSampleBufferDelegate> {
+@interface SquareCamViewController: UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate> {
 	IBOutlet UIView *previewView;
   IBOutlet UIView *facialView0, *facialView1, *facialView2, *facialView3;
   NSArray *facialViewLayers;  // 4 layers
@@ -66,13 +66,10 @@
 	UIImage *square;
 	BOOL isUsingFrontFacingCamera;
 	CIDetector *faceDetector;
-	CGFloat beginGestureScale;
-	CGFloat effectiveScale;
 }
 
 - (IBAction)takePicture: (id)sender;
 - (IBAction)switchCameras: (id)sender;
-- (IBAction)handlePinchGesture: (UIGestureRecognizer *)sender;
 - (IBAction)toggleFaceDetection: (id)sender;
 
 @end

@@ -161,7 +161,6 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 		[session addOutput: videoDataOutput];
 	[[videoDataOutput connectionWithMediaType: AVMediaTypeVideo] setEnabled: NO];
 	
-	effectiveScale = 1.0;
 	previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession: session];
 	[previewLayer setBackgroundColor: [[UIColor blackColor] CGColor]];
 	[previewLayer setVideoGravity: AVLayerVideoGravityResizeAspect];
@@ -451,42 +450,6 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 - (BOOL)shouldAutorotateToInterfaceOrientation: (UIInterfaceOrientation)interfaceOrientation {
   // Return YES for supported orientations
 	return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (BOOL)gestureRecognizerShouldBegin: (UIGestureRecognizer *)gestureRecognizer {
-	if ( [gestureRecognizer isKindOfClass: [UIPinchGestureRecognizer class]] ) {
-		beginGestureScale = effectiveScale;
-	}
-	return YES;
-}
-
-// scale image depending on users pinch gesture
-- (IBAction)handlePinchGesture: (UIPinchGestureRecognizer *)recognizer {
-	BOOL allTouchesAreOnThePreviewLayer = YES;
-	NSUInteger numTouches = [recognizer numberOfTouches], i;
-	for ( i = 0; i < numTouches; ++i ) {
-		CGPoint location = [recognizer locationOfTouch: i
-                                            inView: previewView];
-		CGPoint convertedLocation = [previewLayer convertPoint: location
-                                                 fromLayer: previewLayer.superlayer];
-		if (![previewLayer containsPoint: convertedLocation]) {
-			allTouchesAreOnThePreviewLayer = NO;
-			break;
-		}
-	}
-	
-	if (allTouchesAreOnThePreviewLayer) {
-		effectiveScale = beginGestureScale * recognizer.scale;
-		if (effectiveScale < 1.0)
-			effectiveScale = 1.0;
-		CGFloat maxScaleAndCropFactor = [[stillImageOutput connectionWithMediaType:AVMediaTypeVideo] videoMaxScaleAndCropFactor];
-		if (effectiveScale > maxScaleAndCropFactor)
-			effectiveScale = maxScaleAndCropFactor;
-		[CATransaction begin];
-		[CATransaction setAnimationDuration:.025];
-		[previewLayer setAffineTransform: CGAffineTransformMakeScale(effectiveScale, effectiveScale)];
-		[CATransaction commit];
-	}
 }
 
 @end

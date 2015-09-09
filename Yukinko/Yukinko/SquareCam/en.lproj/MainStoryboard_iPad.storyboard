@@ -54,9 +54,6 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="20" appends="YES" id="21"/>
-                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -67,12 +64,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3" sceneMemberID="firstResponder"/>
-                <pinchGestureRecognizer id="20">
-                    <connections>
-                        <action selector="handlePinchGesture:" destination="2" id="23"/>
-                        <outlet property="delegate" destination="2" id="22"/>
-                    </connections>
-                </pinchGestureRecognizer>
             </objects>
         </scene>
     </scenes>
