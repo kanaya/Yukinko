@@ -242,46 +242,46 @@ static CGContextRef CreateCGBitmapContextForSize(CGSize size) {
 
 // utility routine to create a new image with the red square overlay with appropriate orientation
 // and return the new composited image which can be saved to the camera roll
-- (CGImageRef)newSquareOverlayedImageForFeatures: (NSArray *)features inCGImage: (CGImageRef)backgroundImage withOrientation: (UIDeviceOrientation)orientation frontFacing: (BOOL)isFrontFacing {
-	CGImageRef returnImage = NULL;
-	CGRect backgroundImageRect = CGRectMake(0., 0., CGImageGetWidth(backgroundImage), CGImageGetHeight(backgroundImage));
-	CGContextRef bitmapContext = CreateCGBitmapContextForSize(backgroundImageRect.size);
-	CGContextClearRect(bitmapContext, backgroundImageRect);
-	CGContextDrawImage(bitmapContext, backgroundImageRect, backgroundImage);
-	CGFloat rotationDegrees = 0.;
-	
-	switch (orientation) {
-		case UIDeviceOrientationPortrait:
-			rotationDegrees = -90.;
-			break;
-		case UIDeviceOrientationPortraitUpsideDown:
-			rotationDegrees = 90.;
-			break;
-		case UIDeviceOrientationLandscapeLeft:
-			if (isFrontFacing) rotationDegrees = 180.;
-			else rotationDegrees = 0.;
-			break;
-		case UIDeviceOrientationLandscapeRight:
-			if (isFrontFacing) rotationDegrees = 0.;
-			else rotationDegrees = 180.;
-			break;
-		case UIDeviceOrientationFaceUp:
-		case UIDeviceOrientationFaceDown:
-		default:
-			break; // leave the layer in its last known orientation
-	}
-	UIImage *rotatedSquareImage = [square imageRotatedByDegrees: rotationDegrees];
-	
-  // features found by the face detector
-	for (CIFaceFeature *ff in features) {
-		CGRect faceRect = [ff bounds];
-		CGContextDrawImage(bitmapContext, faceRect, [rotatedSquareImage CGImage]);
-	}
-	returnImage = CGBitmapContextCreateImage(bitmapContext);
-	CGContextRelease(bitmapContext);
-	
-	return returnImage;
-}
+//- (CGImageRef)newSquareOverlayedImageForFeatures: (NSArray *)features inCGImage: (CGImageRef)backgroundImage withOrientation: (UIDeviceOrientation)orientation frontFacing: (BOOL)isFrontFacing {
+//	CGImageRef returnImage = NULL;
+//	CGRect backgroundImageRect = CGRectMake(0., 0., CGImageGetWidth(backgroundImage), CGImageGetHeight(backgroundImage));
+//	CGContextRef bitmapContext = CreateCGBitmapContextForSize(backgroundImageRect.size);
+//	CGContextClearRect(bitmapContext, backgroundImageRect);
+//	CGContextDrawImage(bitmapContext, backgroundImageRect, backgroundImage);
+//	CGFloat rotationDegrees = 0.;
+//	
+//	switch (orientation) {
+//		case UIDeviceOrientationPortrait:
+//			rotationDegrees = -90.;
+//			break;
+//		case UIDeviceOrientationPortraitUpsideDown:
+//			rotationDegrees = 90.;
+//			break;
+//		case UIDeviceOrientationLandscapeLeft:
+//			if (isFrontFacing) rotationDegrees = 180.;
+//			else rotationDegrees = 0.;
+//			break;
+//		case UIDeviceOrientationLandscapeRight:
+//			if (isFrontFacing) rotationDegrees = 0.;
+//			else rotationDegrees = 180.;
+//			break;
+//		case UIDeviceOrientationFaceUp:
+//		case UIDeviceOrientationFaceDown:
+//		default:
+//			break; // leave the layer in its last known orientation
+//	}
+//	UIImage *rotatedSquareImage = [square imageRotatedByDegrees: rotationDegrees];
+//	
+//  // features found by the face detector
+//	for (CIFaceFeature *ff in features) {
+//		CGRect faceRect = [ff bounds];
+//		CGContextDrawImage(bitmapContext, faceRect, [rotatedSquareImage CGImage]);
+//	}
+//	returnImage = CGBitmapContextCreateImage(bitmapContext);
+//	CGContextRelease(bitmapContext);
+//	
+//	return returnImage;
+//}
 
 // utility routine used after taking a still image to write the resulting image to the camera roll
 //- (BOOL)writeCGImageToCameraRoll: (CGImageRef)cgImage withMetadata: (NSDictionary *)metadata {
