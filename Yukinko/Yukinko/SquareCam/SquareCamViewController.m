@@ -121,7 +121,8 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 	
   // Select a video device, make an input
 	AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType: AVMediaTypeVideo];
-	AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice: device error: &error];
+	AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice: device
+                                                                            error: &error];
 	require(error == nil, bail);
 	
   isUsingFrontFacingCamera = NO;
@@ -129,20 +130,21 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 		[session addInput: deviceInput];
 	
   // Make a still image output
-	stillImageOutput = [AVCaptureStillImageOutput new];
-	[stillImageOutput addObserver: self
-                     forKeyPath: @"capturingStillImage"
-                        options: NSKeyValueObservingOptionNew
-                        context: AVCaptureStillImageIsCapturingStillImageContext];
-	if ([session canAddOutput: stillImageOutput])
-		[session addOutput: stillImageOutput];
-	
+//	stillImageOutput = [AVCaptureStillImageOutput new];
+//	[stillImageOutput addObserver: self
+//                     forKeyPath: @"capturingStillImage"
+//                        options: NSKeyValueObservingOptionNew
+//                        context: AVCaptureStillImageIsCapturingStillImageContext];
+//	if ([session canAddOutput: stillImageOutput])
+//		[session addOutput: stillImageOutput];
+
   // Make a video data output
 	videoDataOutput = [AVCaptureVideoDataOutput new];
 	
   // we want BGRA, both CoreGraphics and OpenGL work well with 'BGRA'
-	NSDictionary *rgbOutputSettings = [NSDictionary dictionaryWithObject: [NSNumber numberWithInt: kCMPixelFormat_32BGRA]
-                                                                forKey: (id)kCVPixelBufferPixelFormatTypeKey];
+//	NSDictionary *rgbOutputSettings = [NSDictionary dictionaryWithObject: [NSNumber numberWithInt: kCMPixelFormat_32BGRA]
+//                                                                forKey: (id)kCVPixelBufferPixelFormatTypeKey];
+  NSDictionary *rgbOutputSettings = @{ (id)kCVPixelBufferPixelFormatTypeKey: @(kCMPixelFormat_32BGRA) };
 	[videoDataOutput setVideoSettings: rgbOutputSettings];
 	[videoDataOutput setAlwaysDiscardsLateVideoFrames: YES];
   // discard if the data output queue is blocked (as we process the still image)
@@ -153,6 +155,7 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 	videoDataOutputQueue = dispatch_queue_create("VideoDataOutputQueue", DISPATCH_QUEUE_SERIAL);
 	[videoDataOutput setSampleBufferDelegate: self
                                      queue: videoDataOutputQueue];
+  // Calls captureOutput:didOutputSampleBuffer:fromConnection:
 	
   if ([session canAddOutput: videoDataOutput])
 		[session addOutput: videoDataOutput];
@@ -272,6 +275,7 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 	[[videoDataOutput connectionWithMediaType: AVMediaTypeVideo] setEnabled: detectFaces];
 }
 
+// THIS IS A DELEGATE METHOD
 - (void)captureOutput: (AVCaptureOutput *)captureOutput didOutputSampleBuffer: (CMSampleBufferRef)sampleBuffer fromConnection: (AVCaptureConnection *)connection {
 	// got an image
 	CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
