@@ -56,9 +56,6 @@
 
 #pragma mark-
 
-// used for KVO observation of the @"capturingStillImage" property to perform flash bulb animation
-//static const NSString *AVCaptureStillImageIsCapturingStillImageContext = @"AVCaptureStillImageIsCapturingStillImageContext";
-
 static CGFloat DegreesToRadians(CGFloat degrees) {
   return degrees * M_PI / 180;
 }
@@ -105,7 +102,6 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 @interface SquareCamViewController (InternalMethods)
 - (void)setupAVCapture;
 - (void)teardownAVCapture;
-//- (void)drawFaceBoxesForFeatures: (NSArray *)features forVideoBox: (CGRect)clap orientation: (UIDeviceOrientation)orientation captureConnection: (AVCaptureConnection *)connection;
 @end
 
 @implementation SquareCamViewController
@@ -127,15 +123,6 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
   isUsingFrontFacingCamera = NO;
 	if ([session canAddInput: deviceInput])
 		[session addInput: deviceInput];
-	
-  // Make a still image output
-//	stillImageOutput = [AVCaptureStillImageOutput new];
-//	[stillImageOutput addObserver: self
-//                     forKeyPath: @"capturingStillImage"
-//                        options: NSKeyValueObservingOptionNew
-//                        context: AVCaptureStillImageIsCapturingStillImageContext];
-//	if ([session canAddOutput: stillImageOutput])
-//		[session addOutput: stillImageOutput];
 
   // Make a video data output
 	videoDataOutput = [AVCaptureVideoDataOutput new];
@@ -193,32 +180,6 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 	[previewLayer release];
 }
 
-// perform a flash bulb animation using KVO to monitor the value of the capturingStillImage property of the AVCaptureStillImageOutput class
-//- (void)observeValueForKeyPath: (NSString *)keyPath ofObject: (id)object change:(NSDictionary *)change context:(void *)context {
-//	if (context == AVCaptureStillImageIsCapturingStillImageContext) {
-//		BOOL isCapturingStillImage = [[change objectForKey:NSKeyValueChangeNewKey] boolValue];
-//		if (isCapturingStillImage) {
-//			// do flash bulb like animation
-//			flashView = [[UIView alloc] initWithFrame: [previewView frame]];
-//			[flashView setBackgroundColor: [UIColor whiteColor]];
-//			[flashView setAlpha: 0.f];
-//			[[[self view] window] addSubview: flashView];
-//			
-//			[UIView animateWithDuration: .4f
-//                       animations: ^{ [flashView setAlpha: 1.f]; } ];
-//		}
-//		else {
-//			[UIView animateWithDuration: .4f
-//                       animations: ^{ [flashView setAlpha: 0.f]; }
-//                       completion: ^(BOOL finished) {
-//                         [flashView removeFromSuperview];
-//                         [flashView release];
-//                         flashView = nil;
-//                       }];
-//    }
-//	}
-//}
-
 // utility routing used during image capture to set up capture orientation
 - (AVCaptureVideoOrientation)avOrientationForDeviceOrientation: (UIDeviceOrientation)deviceOrientation {
 	AVCaptureVideoOrientation result = (AVCaptureVideoOrientation)deviceOrientation;
@@ -228,7 +189,6 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 		result = AVCaptureVideoOrientationLandscapeLeft;
 	return result;
 }
-
 
 // utility routine to display error aleart if takePicture fails
 - (void)displayErrorOnMainQueue: (NSError *)error withMessage: (NSString *)message {
