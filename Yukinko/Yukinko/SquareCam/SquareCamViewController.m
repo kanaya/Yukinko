@@ -111,8 +111,6 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 @implementation SquareCamViewController
 
 - (void)setupAVCapture {
-	NSError *error = nil;
-	
 	AVCaptureSession *session = [AVCaptureSession new];
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
 	    [session setSessionPreset: AVCaptureSessionPreset640x480];
@@ -121,6 +119,7 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 	
   // Select a video device, make an input
 	AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType: AVMediaTypeVideo];
+  NSError *error = nil;
 	AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice: device
                                                                             error: &error];
 	require(error == nil, bail);
@@ -142,8 +141,6 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 	videoDataOutput = [AVCaptureVideoDataOutput new];
 	
   // we want BGRA, both CoreGraphics and OpenGL work well with 'BGRA'
-//	NSDictionary *rgbOutputSettings = [NSDictionary dictionaryWithObject: [NSNumber numberWithInt: kCMPixelFormat_32BGRA]
-//                                                                forKey: (id)kCVPixelBufferPixelFormatTypeKey];
   NSDictionary *rgbOutputSettings = @{ (id)kCVPixelBufferPixelFormatTypeKey: @(kCMPixelFormat_32BGRA) };
 	[videoDataOutput setVideoSettings: rgbOutputSettings];
 	[videoDataOutput setAlwaysDiscardsLateVideoFrames: YES];
@@ -162,7 +159,7 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 	[[videoDataOutput connectionWithMediaType: AVMediaTypeVideo] setEnabled: NO];
 	
 	previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession: session];
-	[previewLayer setBackgroundColor: [[UIColor blackColor] CGColor]];
+  [previewLayer setBackgroundColor: [[UIColor blueColor] CGColor]];
 	[previewLayer setVideoGravity: AVLayerVideoGravityResizeAspect];
 	CALayer *rootLayer = [previewView layer];
 	[rootLayer setMasksToBounds: YES];
@@ -197,30 +194,30 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 }
 
 // perform a flash bulb animation using KVO to monitor the value of the capturingStillImage property of the AVCaptureStillImageOutput class
-- (void)observeValueForKeyPath: (NSString *)keyPath ofObject: (id)object change:(NSDictionary *)change context:(void *)context {
-	if (context == AVCaptureStillImageIsCapturingStillImageContext) {
-		BOOL isCapturingStillImage = [[change objectForKey:NSKeyValueChangeNewKey] boolValue];
-		if (isCapturingStillImage) {
-			// do flash bulb like animation
-			flashView = [[UIView alloc] initWithFrame: [previewView frame]];
-			[flashView setBackgroundColor: [UIColor whiteColor]];
-			[flashView setAlpha: 0.f];
-			[[[self view] window] addSubview: flashView];
-			
-			[UIView animateWithDuration: .4f
-                       animations: ^{ [flashView setAlpha: 1.f]; } ];
-		}
-		else {
-			[UIView animateWithDuration: .4f
-                       animations: ^{ [flashView setAlpha: 0.f]; }
-                       completion: ^(BOOL finished) {
-                         [flashView removeFromSuperview];
-                         [flashView release];
-                         flashView = nil;
-                       }];
-    }
-	}
-}
+//- (void)observeValueForKeyPath: (NSString *)keyPath ofObject: (id)object change:(NSDictionary *)change context:(void *)context {
+//	if (context == AVCaptureStillImageIsCapturingStillImageContext) {
+//		BOOL isCapturingStillImage = [[change objectForKey:NSKeyValueChangeNewKey] boolValue];
+//		if (isCapturingStillImage) {
+//			// do flash bulb like animation
+//			flashView = [[UIView alloc] initWithFrame: [previewView frame]];
+//			[flashView setBackgroundColor: [UIColor whiteColor]];
+//			[flashView setAlpha: 0.f];
+//			[[[self view] window] addSubview: flashView];
+//			
+//			[UIView animateWithDuration: .4f
+//                       animations: ^{ [flashView setAlpha: 1.f]; } ];
+//		}
+//		else {
+//			[UIView animateWithDuration: .4f
+//                       animations: ^{ [flashView setAlpha: 0.f]; }
+//                       completion: ^(BOOL finished) {
+//                         [flashView removeFromSuperview];
+//                         [flashView release];
+//                         flashView = nil;
+//                       }];
+//    }
+//	}
+//}
 
 // utility routing used during image capture to set up capture orientation
 - (AVCaptureVideoOrientation)avOrientationForDeviceOrientation: (UIDeviceOrientation)deviceOrientation {
