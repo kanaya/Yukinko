@@ -149,7 +149,7 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
   // [previewLayer setBackgroundColor: [[UIColor blueColor] CGColor]];  // ng ???
 	[previewLayer setVideoGravity: AVLayerVideoGravityResizeAspect];
 	CALayer *rootLayer = [previewView layer];
-  // [rootLayer setBackgroundColor: [UIColor blueColor].CGColor];  // ng ???
+  [rootLayer setBackgroundColor: [UIColor blueColor].CGColor];  // ng ???
 	[rootLayer setMasksToBounds: YES];
 	[previewLayer setFrame: [rootLayer bounds]];
 	[rootLayer addSublayer: previewLayer];
