@@ -126,7 +126,7 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
   maskLayer.frame = playerLayer.frame;
   playerLayer.mask = maskLayer;
 
-  CALayer *rootLayer = previewView.layer;
+  CALayer *rootLayer = facialView.layer;
   [rootLayer addSublayer: playerLayer];
   [player play];
 }
@@ -405,8 +405,8 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 
 	// Do any additional setup after loading the view, typically from a nib.
 	[self setupAVCapture];
-  [self setupMoviePlayer];
   [self setupFacialView];
+  [self setupMoviePlayer];
   facialImages = nil;
 }
 
