@@ -54,6 +54,9 @@
 #import <AssertMacros.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
+const NSUInteger N_FACES = 4;
+const NSUInteger FACE_WINDOW = 64;
+
 #pragma mark-
 
 static CGFloat DegreesToRadians(CGFloat degrees) {
@@ -101,6 +104,7 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 
 @interface SquareCamViewController (InternalMethods)
 - (void)setupMoviePlayer;
+- (void)setupFacialView;
 - (void)setupAVCapture;
 - (void)teardownAVCapture;
 @end
@@ -125,6 +129,28 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
   CALayer *rootLayer = previewView.layer;
   [rootLayer addSublayer: playerLayer];
   [player play];
+}
+
+- (void)setupFacialView {
+  NSDictionary *detectorOptions = @{ CIDetectorAccuracy: CIDetectorAccuracyLow };
+  faceDetector = [[CIDetector detectorOfType: CIDetectorTypeFace
+                                     context: nil
+                                     options: detectorOptions] retain];
+
+  NSMutableArray *_facialViewLayers = [NSMutableArray arrayWithCapacity: N_FACES];
+  for (int i = 0; i < N_FACES; ++i) {
+    CALayer *facialViewLayer = [[CALayer layer] retain];
+    facialViewLayer.backgroundColor = [UIColor yellowColor].CGColor;
+    facialViewLayer.frame = CGRectMake(i * (FACE_WINDOW + 16), 0, FACE_WINDOW, FACE_WINDOW);
+    facialViewLayer.bounds = CGRectMake(i * (FACE_WINDOW + 16), 0, FACE_WINDOW, FACE_WINDOW);
+    [facialView.layer addSublayer: facialViewLayer];
+    [_facialViewLayers insertObject: facialViewLayer
+                            atIndex: i];
+  }
+  facialViewLayers = [[NSArray arrayWithArray: _facialViewLayers] retain];
+  
+
+
 }
 
 - (void)setupAVCapture {
@@ -167,7 +193,6 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 	[[videoDataOutput connectionWithMediaType: AVMediaTypeVideo] setEnabled: NO];
 	
 	previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession: session];
-  // [previewLayer setBackgroundColor: [[UIColor blueColor] CGColor]];  // ng ???
 	[previewLayer setVideoGravity: AVLayerVideoGravityResizeAspect];
 
 	CALayer *rootLayer = [previewView layer];
@@ -235,13 +260,13 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
       UIImage *image = [facialImages objectAtIndex: i];
       layer.contents = (id)image.CGImage;
     }
-    for (NSUInteger i = facialImages.count; i < 4; ++i) {
+    for (NSUInteger i = facialImages.count; i < N_FACES; ++i) {
       CALayer *layer = [facialViewLayers objectAtIndex: i];
       layer.contents = NULL;
     }
   }
   else {
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < N_FACES; ++i) {
       CALayer *layer = [facialViewLayers objectAtIndex: i];
       layer.contents = NULL;
     }
@@ -380,24 +405,7 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 	// Do any additional setup after loading the view, typically from a nib.
 	[self setupAVCapture];
   [self setupMoviePlayer];
-
-  NSDictionary *detectorOptions = @{ CIDetectorAccuracy: CIDetectorAccuracyLow };
-	faceDetector = [[CIDetector detectorOfType: CIDetectorTypeFace
-                                     context: nil
-                                     options: detectorOptions] retain];
-
-  NSMutableArray *_facialViewLayers = [NSMutableArray arrayWithCapacity: 4];
-  for (int i = 0; i < 4; ++i) {
-    CALayer *facialViewLayer = [[CALayer layer] retain];
-    // facialViewLayer.backgroundColor = [UIColor yellowColor].CGColor;
-    facialViewLayer.bounds = facialView.bounds;  // WARNING: ALL LAYERS SHARE THE SAME GEOMETRY
-    facialViewLayer.frame = facialView.bounds;
-    [facialView.layer addSublayer: facialViewLayer];
-    [_facialViewLayers insertObject: facialViewLayer
-                            atIndex: i];
-  }
-  facialViewLayers = [[NSArray arrayWithArray: _facialViewLayers] retain];
-
+  [self setupFacialView];
   facialImages = nil;
 }
 
