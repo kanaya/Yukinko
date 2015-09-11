@@ -150,11 +150,10 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 	[previewLayer setVideoGravity: AVLayerVideoGravityResizeAspect];
 
 	CALayer *rootLayer = [previewView layer];
-  rootLayer.backgroundColor = [UIColor redColor].CGColor;
-	// [rootLayer setMasksToBounds: YES];
-	// [previewLayer setFrame: rootLayer.bounds];
-  // We don't have to show previewLayer
-	// [rootLayer addSublayer: previewLayer];
+	[rootLayer setMasksToBounds: YES];
+	[previewLayer setFrame: rootLayer.bounds];
+  // We don't have to show previewLayer, though
+	[rootLayer addSublayer: previewLayer];
 	[session startRunning];
 
   bail:
