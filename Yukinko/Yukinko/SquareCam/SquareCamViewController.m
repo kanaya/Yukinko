@@ -198,7 +198,8 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 	CALayer *rootLayer = [previewView layer];
 	[rootLayer setMasksToBounds: YES];
 	[previewLayer setFrame: rootLayer.bounds];
-  // We don't have to show previewLayer, though
+  // We don't have to show previewLayer
+  previewLayer.hidden = YES;
 	[rootLayer addSublayer: previewLayer];
 	[session startRunning];
 
