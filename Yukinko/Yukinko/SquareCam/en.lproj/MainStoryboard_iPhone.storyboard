@@ -19,23 +19,8 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                             </view>
-                            <view contentMode="scaleToFill" id="BrY-jf-g4B">
-                                <rect key="frame" x="128" y="208" width="64" height="64"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" id="Hhi-f2-8y3">
-                                <rect key="frame" x="128" y="208" width="64" height="64"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" id="WYj-Mn-qpt">
-                                <rect key="frame" x="128" y="208" width="64" height="64"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" id="gOw-ok-jzz">
-                                <rect key="frame" x="128" y="208" width="64" height="64"/>
+                            <view contentMode="scaleToFill" id="HqE-tY-gLR">
+                                <rect key="frame" x="96" y="176" width="128" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -80,10 +65,7 @@
                     </view>
                     <connections>
                         <outlet property="camerasControl" destination="15" id="20"/>
-                        <outlet property="facialView0" destination="BrY-jf-g4B" id="DfL-oR-Frt"/>
-                        <outlet property="facialView1" destination="Hhi-f2-8y3" id="RhR-lv-RhF"/>
-                        <outlet property="facialView2" destination="WYj-Mn-qpt" id="raB-5q-fpk"/>
-                        <outlet property="facialView3" destination="gOw-ok-jzz" id="ENa-en-vxJ"/>
+                        <outlet property="facialView" destination="HqE-tY-gLR" id="wkA-mm-fXM"/>
                         <outlet property="previewView" destination="12" id="8aJ-N0-WBq"/>
                     </connections>
                 </viewController>

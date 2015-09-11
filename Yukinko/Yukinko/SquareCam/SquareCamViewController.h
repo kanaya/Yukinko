@@ -53,7 +53,7 @@
 
 @interface SquareCamViewController: UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate> {
 	IBOutlet UIView *previewView;
-  IBOutlet UIView *facialView0, *facialView1, *facialView2, *facialView3;
+  IBOutlet UIView *facialView;
   NSArray *facialViewLayers;  // 4 layers
   NSArray *facialImages;  // upto 4 images
 	IBOutlet UISegmentedControl *camerasControl;

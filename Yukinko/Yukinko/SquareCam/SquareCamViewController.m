@@ -365,17 +365,14 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
                                      options: detectorOptions] retain];
 
   NSMutableArray *_facialViewLayers = [NSMutableArray arrayWithCapacity: 4];
-  NSArray *facialViews = @[ facialView0, facialView1, facialView2, facialView3 ];
-  int i = 0;
-  for (UIView *facialView in facialViews) {
-    CALayer *facialLayer = [[CALayer layer] retain];
-    facialLayer.backgroundColor = [UIColor yellowColor].CGColor;
-    facialLayer.bounds = facialView.bounds;
-    facialLayer.frame = facialView.bounds;
-    [facialView.layer addSublayer: facialLayer];
-    [_facialViewLayers insertObject: facialLayer
+  for (int i = 0; i < 4; ++i) {
+    CALayer *facialViewLayer = [[CALayer layer] retain];
+    // facialViewLayer.backgroundColor = [UIColor yellowColor].CGColor;
+    facialViewLayer.bounds = facialView.bounds;  // WARNING: ALL LAYERS SHARE THE SAME GEOMETRY
+    facialViewLayer.frame = facialView.bounds;
+    [facialView.layer addSublayer: facialViewLayer];
+    [_facialViewLayers insertObject: facialViewLayer
                             atIndex: i];
-    ++i;
   }
   facialViewLayers = [[NSArray arrayWithArray: _facialViewLayers] retain];
 
