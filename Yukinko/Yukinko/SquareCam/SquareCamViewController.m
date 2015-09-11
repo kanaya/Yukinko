@@ -213,7 +213,7 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
       UIImage *image = [facialImages objectAtIndex: i];
       layer.contents = (id)image.CGImage;
     }
-    for (int i = facialImages.count; i < 4; ++i) {
+    for (NSUInteger i = facialImages.count; i < 4; ++i) {
       CALayer *layer = [facialViewLayers objectAtIndex: i];
       layer.contents = NULL;
     }
