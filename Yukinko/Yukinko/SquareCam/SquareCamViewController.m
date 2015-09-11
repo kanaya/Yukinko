@@ -148,11 +148,13 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 	previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession: session];
   // [previewLayer setBackgroundColor: [[UIColor blueColor] CGColor]];  // ng ???
 	[previewLayer setVideoGravity: AVLayerVideoGravityResizeAspect];
+
 	CALayer *rootLayer = [previewView layer];
-  [rootLayer setBackgroundColor: [UIColor blueColor].CGColor];  // ng ???
-	[rootLayer setMasksToBounds: YES];
-	[previewLayer setFrame: [rootLayer bounds]];
-	[rootLayer addSublayer: previewLayer];
+  rootLayer.backgroundColor = [UIColor redColor].CGColor;
+	// [rootLayer setMasksToBounds: YES];
+	// [previewLayer setFrame: rootLayer.bounds];
+  // We don't have to show previewLayer
+	// [rootLayer addSublayer: previewLayer];
 	[session startRunning];
 
   bail:
@@ -370,7 +372,7 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
     CALayer *facialLayer = [[CALayer layer] retain];
     facialLayer.backgroundColor = [UIColor yellowColor].CGColor;
     facialLayer.bounds = facialView.bounds;
-    facialLayer.frame = facialView.bounds; // ???
+    facialLayer.frame = facialView.bounds;
     [facialView.layer addSublayer: facialLayer];
     [_facialViewLayers insertObject: facialLayer
                             atIndex: i];

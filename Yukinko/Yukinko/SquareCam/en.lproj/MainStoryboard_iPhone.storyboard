@@ -86,6 +86,7 @@
                         <outlet property="facialView1" destination="fqz-sF-cdI" id="cpe-To-RY5"/>
                         <outlet property="facialView2" destination="6uH-gg-9tp" id="SX9-Em-Faa"/>
                         <outlet property="facialView3" destination="HIi-EV-ifb" id="kKz-yb-dBv"/>
+                        <outlet property="previewView" destination="12" id="8aJ-N0-WBq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
