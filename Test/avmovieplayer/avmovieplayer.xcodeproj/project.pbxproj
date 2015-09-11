@@ -14,6 +14,7 @@
 		BF9B75811BA2965B0021CB32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF9B75801BA2965B0021CB32 /* Assets.xcassets */; };
 		BF9B75841BA2965B0021CB32 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF9B75821BA2965B0021CB32 /* LaunchScreen.storyboard */; };
 		BF9B758D1BA297DD0021CB32 /* alpaca-background.mov in Resources */ = {isa = PBXBuildFile; fileRef = BF9B758C1BA297DD0021CB32 /* alpaca-background.mov */; settings = {ASSET_TAGS = (); }; };
+		BF9B758F1BA29D410021CB32 /* testmask.png in Resources */ = {isa = PBXBuildFile; fileRef = BF9B758E1BA29D410021CB32 /* testmask.png */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		BF9B75831BA2965B0021CB32 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BF9B75851BA2965B0021CB32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF9B758C1BA297DD0021CB32 /* alpaca-background.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "alpaca-background.mov"; sourceTree = "<group>"; };
+		BF9B758E1BA29D410021CB32 /* testmask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testmask.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 		BF9B758B1BA297C70021CB32 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BF9B758E1BA29D410021CB32 /* testmask.png */,
 				BF9B758C1BA297DD0021CB32 /* alpaca-background.mov */,
 			);
 			name = Resources;
@@ -151,6 +154,7 @@
 				BF9B75841BA2965B0021CB32 /* LaunchScreen.storyboard in Resources */,
 				BF9B75811BA2965B0021CB32 /* Assets.xcassets in Resources */,
 				BF9B757F1BA2965B0021CB32 /* Main.storyboard in Resources */,
+				BF9B758F1BA29D410021CB32 /* testmask.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
