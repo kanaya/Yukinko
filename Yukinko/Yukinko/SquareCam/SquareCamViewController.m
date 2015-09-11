@@ -100,11 +100,32 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 #pragma mark-
 
 @interface SquareCamViewController (InternalMethods)
+- (void)setupMoviePlayer;
 - (void)setupAVCapture;
 - (void)teardownAVCapture;
 @end
 
 @implementation SquareCamViewController
+
+- (void)setupMoviePlayer {
+  NSBundle *mainBundle = [NSBundle mainBundle];
+  NSURL *movieURL = [mainBundle URLForResource: @"alpaca-background" withExtension: @"mov"];
+  AVPlayer *player = [AVPlayer playerWithURL: movieURL];
+  AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer: player];
+  playerLayer.frame = self.view.frame;
+  // playerLayer.bounds = self.view.bounds;
+  // NSLog(@"frame = (%f, %f, %f, %f); bounds = (%f, %f, %f, %f)", self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height, self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height);
+
+//  UIImage *maskImage = [UIImage imageNamed: @"testmask.png"];
+//  CALayer *maskLayer = [CALayer layer];
+//  maskLayer.contents = (id)maskImage.CGImage;
+//  maskLayer.frame = playerLayer.frame;
+//  playerLayer.mask = maskLayer;
+
+  CALayer *rootLayer = previewView.layer;
+  [rootLayer addSublayer: playerLayer];
+  [player play];
+}
 
 - (void)setupAVCapture {
 	AVCaptureSession *session = [AVCaptureSession new];
@@ -358,6 +379,7 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 
 	// Do any additional setup after loading the view, typically from a nib.
 	[self setupAVCapture];
+  [self setupMoviePlayer];
 
   NSDictionary *detectorOptions = @{ CIDetectorAccuracy: CIDetectorAccuracyLow };
 	faceDetector = [[CIDetector detectorOfType: CIDetectorTypeFace
