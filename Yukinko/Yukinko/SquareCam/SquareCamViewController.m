@@ -57,6 +57,26 @@
 const NSUInteger N_FACES = 4;
 const NSUInteger FACE_WINDOW = 64;
 
+const CGFloat FACE_0_X = 125;
+const CGFloat FACE_0_Y = 80;
+const CGFloat FACE_0_R = 65;
+
+const CGFloat FACE_1_X = 230;
+const CGFloat FACE_1_Y = 120;
+const CGFloat FACE_1_R = 40;
+
+const CGFloat FACE_2_X = 280;
+const CGFloat FACE_2_Y = 110;
+const CGFloat FACE_2_R = 45;
+
+const CGFloat FACE_3_X = 350;
+const CGFloat FACE_3_Y = 80;
+const CGFloat FACE_3_R = 70;
+
+const CGFloat face_i_x[] = { FACE_0_X, FACE_1_X, FACE_2_X, FACE_3_X };
+const CGFloat face_i_y[] = { FACE_0_Y, FACE_1_Y, FACE_2_Y, FACE_3_Y };
+const CGFloat face_i_r[] = { FACE_0_R, FACE_1_R, FACE_2_R, FACE_3_R };
+
 #pragma mark-
 
 static CGFloat DegreesToRadians(CGFloat degrees) {
@@ -141,16 +161,13 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
   for (int i = 0; i < N_FACES; ++i) {
     CALayer *facialViewLayer = [[CALayer layer] retain];
     facialViewLayer.backgroundColor = [UIColor yellowColor].CGColor;
-    facialViewLayer.frame = CGRectMake(i * (FACE_WINDOW + 16), 0, FACE_WINDOW, FACE_WINDOW);
-    facialViewLayer.bounds = CGRectMake(i * (FACE_WINDOW + 16), 0, FACE_WINDOW, FACE_WINDOW);
+    facialViewLayer.frame = CGRectMake(face_i_x[i], face_i_y[i], face_i_r[i], face_i_r[i]);
+    facialViewLayer.bounds = CGRectMake(face_i_x[i], face_i_y[i], face_i_r[i], face_i_r[i]);
     [facialView.layer addSublayer: facialViewLayer];
     [_facialViewLayers insertObject: facialViewLayer
                             atIndex: i];
   }
   facialViewLayers = [[NSArray arrayWithArray: _facialViewLayers] retain];
-  
-
-
 }
 
 - (void)setupAVCapture {
