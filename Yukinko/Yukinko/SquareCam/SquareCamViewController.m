@@ -120,11 +120,11 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
   // playerLayer.bounds = self.view.bounds;
   // NSLog(@"frame = (%f, %f, %f, %f); bounds = (%f, %f, %f, %f)", self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height, self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height);
 
-//  UIImage *maskImage = [UIImage imageNamed: @"testmask.png"];
-//  CALayer *maskLayer = [CALayer layer];
-//  maskLayer.contents = (id)maskImage.CGImage;
-//  maskLayer.frame = playerLayer.frame;
-//  playerLayer.mask = maskLayer;
+  UIImage *maskImage = [UIImage imageNamed: @"mask.png"];
+  CALayer *maskLayer = [CALayer layer];
+  maskLayer.contents = (id)maskImage.CGImage;
+  maskLayer.frame = playerLayer.frame;
+  playerLayer.mask = maskLayer;
 
   CALayer *rootLayer = previewView.layer;
   [rootLayer addSublayer: playerLayer];

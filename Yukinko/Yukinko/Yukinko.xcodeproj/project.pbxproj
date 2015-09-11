@@ -26,6 +26,7 @@
 		2BA4851113F1E6CC000BABB3 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BA4850E13F1E6CC000BABB3 /* MainStoryboard_iPhone.storyboard */; };
 		2BA4851713F1E6DB000BABB3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA4851313F1E6DB000BABB3 /* main.m */; };
 		2BA4851A13F1EC39000BABB3 /* ReadMe.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2BA4851913F1EC39000BABB3 /* ReadMe.txt */; };
+		BF5024CE1BA2E63300AAE74B /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5024CD1BA2E63300AAE74B /* mask.png */; settings = {ASSET_TAGS = (); }; };
 		BF50B32C1BA2C6C800F5D5DA /* alpaca-background.mov in Resources */ = {isa = PBXBuildFile; fileRef = BF50B32B1BA2C6C800F5D5DA /* alpaca-background.mov */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,7 @@
 		2BA4851313F1E6DB000BABB3 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SquareCam/main.m; sourceTree = SOURCE_ROOT; };
 		2BA4851413F1E6DB000BABB3 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = SquareCam/Prefix.pch; sourceTree = SOURCE_ROOT; };
 		2BA4851913F1EC39000BABB3 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
+		BF5024CD1BA2E63300AAE74B /* mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mask.png; sourceTree = "<group>"; };
 		BF50B32B1BA2C6C800F5D5DA /* alpaca-background.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "alpaca-background.mov"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,6 +81,7 @@
 		1B867FCD139D4AD300AD6B47 = {
 			isa = PBXGroup;
 			children = (
+				BF5024CD1BA2E63300AAE74B /* mask.png */,
 				BF50B32B1BA2C6C800F5D5DA /* alpaca-background.mov */,
 				2B0EF003170E3E3A008EDA06 /* Default-568h@2x.png */,
 				2BA4851913F1EC39000BABB3 /* ReadMe.txt */,
@@ -195,6 +198,7 @@
 				2BA4851113F1E6CC000BABB3 /* MainStoryboard_iPhone.storyboard in Resources */,
 				2BA4851A13F1EC39000BABB3 /* ReadMe.txt in Resources */,
 				2B0EF004170E3E3A008EDA06 /* Default-568h@2x.png in Resources */,
+				BF5024CE1BA2E63300AAE74B /* mask.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
