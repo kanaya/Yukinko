@@ -207,7 +207,7 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 - (IBAction)takePicture: (id)sender {
   // Here we go.
   if (facialImages) {
-    NSLog(@"Snap (%d)", facialImages.count);
+    // NSLog(@"Snap (%d)", facialImages.count);
     for (int i = 0; i < facialImages.count; ++i) {
       CALayer *layer = [facialViewLayers objectAtIndex: i];
       UIImage *image = [facialImages objectAtIndex: i];
@@ -319,7 +319,6 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 - (void)dealloc {
 	[self teardownAVCapture];
 	[faceDetector release];
-	[square release];
 	[super dealloc];
 }
 
@@ -358,7 +357,6 @@ static CGFloat DegreesToRadians(CGFloat degrees) {
 
 	// Do any additional setup after loading the view, typically from a nib.
 	[self setupAVCapture];
-	square = [[UIImage imageNamed: @"squarePNG"] retain];
 
   NSDictionary *detectorOptions = @{ CIDetectorAccuracy: CIDetectorAccuracyLow };
 	faceDetector = [[CIDetector detectorOfType: CIDetectorTypeFace
