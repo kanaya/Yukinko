@@ -13,6 +13,7 @@
 		BF9B757F1BA2965B0021CB32 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF9B757D1BA2965B0021CB32 /* Main.storyboard */; };
 		BF9B75811BA2965B0021CB32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF9B75801BA2965B0021CB32 /* Assets.xcassets */; };
 		BF9B75841BA2965B0021CB32 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF9B75821BA2965B0021CB32 /* LaunchScreen.storyboard */; };
+		BF9B758D1BA297DD0021CB32 /* alpaca-background.mov in Resources */ = {isa = PBXBuildFile; fileRef = BF9B758C1BA297DD0021CB32 /* alpaca-background.mov */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		BF9B75801BA2965B0021CB32 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BF9B75831BA2965B0021CB32 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BF9B75851BA2965B0021CB32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF9B758C1BA297DD0021CB32 /* alpaca-background.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "alpaca-background.mov"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +44,7 @@
 		BF9B75681BA2965A0021CB32 = {
 			isa = PBXGroup;
 			children = (
+				BF9B758B1BA297C70021CB32 /* Resources */,
 				BF9B75731BA2965B0021CB32 /* avmovieplayer */,
 				BF9B75721BA2965B0021CB32 /* Products */,
 			);
@@ -77,6 +80,14 @@
 				BF9B75751BA2965B0021CB32 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BF9B758B1BA297C70021CB32 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BF9B758C1BA297DD0021CB32 /* alpaca-background.mov */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,6 +147,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF9B758D1BA297DD0021CB32 /* alpaca-background.mov in Resources */,
 				BF9B75841BA2965B0021CB32 /* LaunchScreen.storyboard in Resources */,
 				BF9B75811BA2965B0021CB32 /* Assets.xcassets in Resources */,
 				BF9B757F1BA2965B0021CB32 /* Main.storyboard in Resources */,
